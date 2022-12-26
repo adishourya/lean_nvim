@@ -1,0 +1,3 @@
+plugin/
+vim.log
+lua/core/colorscheme_settings/set_scheme.lua
