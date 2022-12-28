@@ -252,7 +252,7 @@ require('packer').startup(function(use)
 	use{ "hrsh7th/cmp-path", after = "nvim-cmp" }
 	use{ "hrsh7th/cmp-cmdline", after = "nvim-cmp" }
 	use{ "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" }
-	use{ "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" }
+	-- use{ "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" }
 	use{ "lukas-reineke/cmp-under-comparator", after = "nvim-cmp", module = "cmp-under-comparator" }
 
 	use{
