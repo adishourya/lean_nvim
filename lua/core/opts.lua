@@ -63,8 +63,8 @@ vim.opt.relativenumber = true
 vim.wo.cursorline = false
 vim.wo.signcolumn = "yes"
 
-vim.wo.scrolloff = 0
-vim.wo.sidescrolloff = 0
+vim.wo.scrolloff = 2
+vim.wo.sidescrolloff = 2
 
 vim.o.backup = false
 vim.o.swapfile = false

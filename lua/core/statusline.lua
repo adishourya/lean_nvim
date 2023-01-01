@@ -35,7 +35,7 @@ local function git_branch()
 	if branch ~= ""  then
 		return "  " .. branch:gsub("\n", "")
 	else
-		return nil
+		return "🚫 "
 	end
 end
 
