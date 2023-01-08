@@ -21,10 +21,8 @@ require('packer').startup(function(use)
 	}
 
 	-- UI stuff (Aesthetics)
-	use {'adishourya/shade.nvim',config=function ()
-		require'shade'.setup({
-			overlay_opacity = 70,
-		})
+	use {'levouh/tint.nvim',config=function ()
+		require'tint'.setup({tint=-20})
 	end}
 
 	use {'stevearc/dressing.nvim',
@@ -122,7 +120,6 @@ require('packer').startup(function(use)
 	-- Others
 	use({
 		"projekt0n/github-nvim-theme",
-		"Shatur/neovim-ayu",
 		"shaunsingh/nord.nvim",
 		"neanias/everforest-nvim",
 		"catppuccin/nvim",
