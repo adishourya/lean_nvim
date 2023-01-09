@@ -21,9 +21,6 @@ require('packer').startup(function(use)
 	}
 
 	-- UI stuff (Aesthetics)
-	use {'levouh/tint.nvim',config=function ()
-		require'tint'.setup({tint=-20})
-	end}
 
 	use {'stevearc/dressing.nvim',
 	config = function ()
