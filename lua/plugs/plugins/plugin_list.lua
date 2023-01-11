@@ -184,9 +184,11 @@ require('packer').startup(function(use)
 		"neovim/nvim-lspconfig",
 	}
 
+	-- Dap Stuff
 	use {
 		"mfussenegger/nvim-dap",
 		"jayp0521/mason-nvim-dap.nvim",
+		"rcarriga/nvim-dap-ui",
 	}
 
 	use({
