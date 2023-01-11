@@ -22,10 +22,10 @@ require('packer').startup(function(use)
 
 	-- UI stuff (Aesthetics)
 
-	use {'stevearc/dressing.nvim',
-	config = function ()
-		require("dressing").setup()
-	end}
+	use { 'stevearc/dressing.nvim',
+		config = function()
+			require("dressing").setup()
+		end }
 
 	use({
 		'rcarriga/nvim-notify',
@@ -39,25 +39,25 @@ require('packer').startup(function(use)
 	})
 
 	-- animates cursor , scroll , window resizing
-	use { 'echasnovski/mini.animate',config =function ()
+	use { 'echasnovski/mini.animate', config = function()
 		require('mini.animate').setup()
-	end}
+	end }
 
 	-- Use "gc" to toggle and untoggle comments
-	use { 'tpope/vim-commentary'}
+	use { 'tpope/vim-commentary' }
 
 	use {
 		'phaazon/hop.nvim',
 		branch = 'v2', -- optional but strongly recommended
 		config = function()
 			-- you can configure Hop the way you like here; see :h hop-config
-			require'hop'.setup {}
+			require 'hop'.setup {}
 		end
 	}
 
 	-- UI to select things (files, grep results, open buffers...)
 	use { 'nvim-telescope/telescope.nvim',
-		requires = { 'nvim-lua/plenary.nvim','nvim-tree/nvim-web-devicons'},
+		requires = { 'nvim-lua/plenary.nvim', 'nvim-tree/nvim-web-devicons' },
 		config = function()
 			-- settings
 			require('telescope').setup {
@@ -68,20 +68,20 @@ require('packer').startup(function(use)
 		end
 	}
 
-	use { "nvim-telescope/telescope-file-browser.nvim" ,
-	config = function()
-		-- settings
-		require("telescope").setup {
-			extensions = {
-				file_browser = {
-					theme = "ivy",
-					-- disables netrw and use telescope-file-browser in its place
-					hijack_netrw = true,
+	use { "nvim-telescope/telescope-file-browser.nvim",
+		config = function()
+			-- settings
+			require("telescope").setup {
+				extensions = {
+					file_browser = {
+						theme = "ivy",
+						-- disables netrw and use telescope-file-browser in its place
+						hijack_netrw = true,
+					},
 				},
-			},
-		}
-		require("telescope").load_extension "file_browser"
-	end}
+			}
+			require("telescope").load_extension "file_browser"
+		end }
 
 	use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make',
 		config = function()
@@ -101,15 +101,6 @@ require('packer').startup(function(use)
 			require('telescope').load_extension('fzf')
 		end
 	}
-	-- use{"elihunter173/dirbuf.nvim",config=function ()
-	-- 	require("dirbuf").setup {
-	-- 		hash_padding = 2,
-	-- 		show_hidden = false,
-	-- 		sort_order = "directories_first",
-	-- 		write_cmd = "DirbufSync",
-	-- 	}
-	-- end}
-
 
 	-- Get Colorscheme
 	-- Install without configuration
@@ -125,15 +116,7 @@ require('packer').startup(function(use)
 		"sainnhe/edge",
 		"sainnhe/sonokai",
 		"adishourya/monokaipro",
-			})
-
-	-- resize buffers / splits
-	use {
-		"kwkarlwang/bufresize.nvim",
-		config = function()
-			require("bufresize").setup()
-		end
-	}
+	})
 
 	-- Colors my hex and rgbs
 	use { 'norcalli/nvim-colorizer.lua',
@@ -185,9 +168,9 @@ require('packer').startup(function(use)
 	}
 
 	-- Highlight, edit, and navigate code using a fast incremental parsing library
-	use { 'nvim-treesitter/nvim-treesitter',commit="4cccb6f"}
-	use { "nvim-treesitter/playground",after="nvim-treesitter"  }
-	use { "nvim-treesitter/nvim-treesitter-textobjects" , after = "nvim-treesitter"}
+	use { 'nvim-treesitter/nvim-treesitter', commit = "4cccb6f" }
+	use { "nvim-treesitter/playground", after = "nvim-treesitter" }
+	use { "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" }
 
 	-- change/add surrounding around selection
 	use({ 'tpope/vim-surround', event = 'BufRead' })
@@ -200,12 +183,12 @@ require('packer').startup(function(use)
 		"williamboman/mason-lspconfig.nvim",
 		"neovim/nvim-lspconfig",
 	}
-	use { 'j-hui/fidget.nvim',
-		config = function()
-			require 'fidget'.setup({
-				text = { spinner = "bouncing_ball" }
-			})
-		end }
+
+	use {
+		"mfussenegger/nvim-dap",
+		"jayp0521/mason-nvim-dap.nvim",
+	}
+
 	use({
 		"glepnir/lspsaga.nvim",
 		branch = "main",
@@ -219,6 +202,18 @@ require('packer').startup(function(use)
 			})
 		end,
 	})
+
+	use {"akinsho/toggleterm.nvim", tag = '*', config = function()
+		require("toggleterm").setup({
+			autochdir = true, -- Hmmm is this how i want it?
+			direction = "float",
+			float_opts = {
+				border="curved",
+			},
+		})
+		vim.keymap.set("n", "<A-d>", "<cmd>ToggleTerm<CR>", { silent = true })
+		vim.keymap.set("t", "<A-d>", [[<C-\><C-n><cmd>ToggleTerm<CR>]], { silent = true })
+	end}
 
 	-- Completion stuff
 	--
@@ -234,29 +229,29 @@ require('packer').startup(function(use)
 
 	-- completion and sources
 
-	use{
+	use {
 		"hrsh7th/nvim-cmp",
 		module = "cmp",
 		event = { "InsertEnter", "CmdLineEnter" },
 		config = function() require("plugs.completion") end,
 	}
-	use{ "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp", module = "cmp_nvim_lsp" }
-	use{ "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" }
-	use{ "hrsh7th/cmp-buffer", after = "nvim-cmp" }
-	use{ "hrsh7th/cmp-path", after = "nvim-cmp" }
-	use{ "hrsh7th/cmp-cmdline", after = "nvim-cmp" }
-	use{ "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" }
+	use { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp", module = "cmp_nvim_lsp" }
+	use { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" }
+	use { "hrsh7th/cmp-buffer", after = "nvim-cmp" }
+	use { "hrsh7th/cmp-path", after = "nvim-cmp" }
+	use { "hrsh7th/cmp-cmdline", after = "nvim-cmp" }
+	use { "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" }
 	-- use{ "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" }
-	use{ "lukas-reineke/cmp-under-comparator", after = "nvim-cmp", module = "cmp-under-comparator" }
+	use { "lukas-reineke/cmp-under-comparator", after = "nvim-cmp", module = "cmp-under-comparator" }
 
-	use{
+	use {
 		"windwp/nvim-autopairs",
 		event = { "InsertEnter", "CmdLineEnter" },
 		module = "nvim-autopairs.completion.cmp",
 		after = "nvim-cmp",
 		config = function() require("nvim-autopairs").setup({}) end,
 	}
-	use{
+	use {
 		"l3mon4d3/luasnip",
 		after = "nvim-cmp",
 		module = "luasnip",
@@ -270,8 +265,8 @@ require('packer').startup(function(use)
 			require("luasnip.loaders.from_vscode").load()
 		end,
 	}
-	use{ "rafamadriz/friendly-snippets", after = "luasnip", event = "InsertEnter" }
-	use{
+	use { "rafamadriz/friendly-snippets", after = "luasnip", event = "InsertEnter" }
+	use {
 		"danymat/neogen",
 		module = "neogen",
 		ft = {

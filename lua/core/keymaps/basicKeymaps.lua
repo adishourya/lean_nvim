@@ -119,7 +119,8 @@ if ok_saga then
 	map("n", lspconfig_keybinds.finder, "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
 	map("n", lspconfig_keybinds.code_action, "<cmd>Lspsaga code_action<CR>", { silent = true })
 	map("v", lspconfig_keybinds.code_action, "<cmd><C-U>Lspsaga range_code_action<CR>", { silent = true })
-	map("n", lspconfig_keybinds.references, "<cmd>Lspsaga rename<CR>", { silent = true })
+	map("n", lspconfig_keybinds.references, "<cmd>lua vim.lsp.buf.references()<CR>", { noremap = true })
+	map("n", lspconfig_keybinds.rename, "<cmd>Lspsaga rename<CR>", { silent = true })
 	map("n", lspconfig_keybinds.preview_definition, "<cmd>Lspsaga peek_definition<CR>", { silent = true })
 	map("n", lspconfig_keybinds.definition, "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true })
 	map("n", lspconfig_keybinds.float_diagnostics, "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
@@ -133,8 +134,7 @@ if ok_saga then
 	end, { silent = true })
 	map("n", "<leader>o", "<cmd>LSoutlineToggle<CR>", { silent = true })
 	map("n", lspconfig_keybinds.hover, "<cmd>Lspsaga hover_doc<CR>", { silent = true })
-	map("n", "<A-d>", "<cmd>Lspsaga open_floaterm<CR>", { silent = true })
-	map("t", "<A-d>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], { silent = true })
+	map("n", lspconfig_keybinds.formatting, "<cmd>lua vim.lsp.buf.format()<CR>", { noremap = true })
 else
 	-- normal
 	map("n", lspconfig_keybinds.declaration, "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true })
@@ -154,6 +154,6 @@ else
 	map("n", lspconfig_keybinds.goto_prev, "<cmd>lua vim.diagnostic.goto_prev()<CR>", { noremap = true })
 	map("n", lspconfig_keybinds.goto_next, "<cmd>lua vim.diagnostic.goto_next()<CR>", { noremap = true })
 	map("n", lspconfig_keybinds.set_loclist, "<cmd>lua vim.diagnostic.setloclist()<CR>", { noremap = true })
-	map("n", lspconfig_keybinds.formatting, "<cmd>lua vim.lsp.buf.format({async=true})<CR>", { noremap = true })
+	map("n", lspconfig_keybinds.formatting, "<cmd>lua vim.lsp.buf.format()<CR>", { noremap = true })
 
 end
