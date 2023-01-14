@@ -5,7 +5,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 if not (dap_ok and dap_ui_ok) then
-  require("notify")("nvim-dap or dap-ui not installed!", "warning") -- nvim-notify is a separate plugin, I recommend it too!
+  require("notify")("nvim-dap or dap-ui not installed!", "warning")
   return
 end
 
