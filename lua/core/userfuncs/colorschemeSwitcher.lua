@@ -38,13 +38,13 @@ local array_sub = function(t1, t2)
 end
 local downloaded = array_sub(preinstalled, installed_colourschemes)
 
-function escape(prompt_bufnr)
+local escape = function(prompt_bufnr)
 	local cmd = "colorscheme " .. current_scheme
 	vim.cmd(cmd)
 	actions.close(prompt_bufnr)
 end
 
-function enter(prompt_bufnr)
+local enter = function(prompt_bufnr)
 	local selected = actions_state.get_selected_entry()
 	local cmd = "colorscheme " .. selected[1]
 	vim.cmd(cmd)
@@ -55,7 +55,7 @@ function enter(prompt_bufnr)
 	vim.notify("Colorscheme Change From "..current_scheme.." to "..selected[1])
 end
 
-function preview_next(prompt_bufnr)
+local preview_next = function(prompt_bufnr)
 	actions.move_selection_next(prompt_bufnr)
 	local selected = actions_state.get_selected_entry()
 	local cmd = "colorscheme " .. selected[1]
@@ -63,7 +63,7 @@ function preview_next(prompt_bufnr)
 
 end
 
-function preview_prev(prompt_bufnr)
+local preview_prev = function(prompt_bufnr)
 	actions.move_selection_previous(prompt_bufnr)
 	local selected = actions_state.get_selected_entry()
 	local cmd = "colorscheme " .. selected[1]

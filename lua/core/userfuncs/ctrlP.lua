@@ -20,7 +20,7 @@ local sorters = require("telescope.sorters")
 local actions = require("telescope.actions")
 local actions_state = require("telescope.actions.state")
 
-function enter(prompt_bufnr)
+local enter = function(prompt_bufnr)
 	local selected = actions_state.get_selected_entry()
 	actions.close(prompt_bufnr)
 	telescope.extensions.file_browser.file_browser({ cwd=selected[1] })
