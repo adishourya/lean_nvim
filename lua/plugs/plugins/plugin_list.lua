@@ -8,7 +8,6 @@ end
 local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
 vim.api.nvim_create_autocmd('BufWritePost',
 	{ command = 'source <afile> | PackerCompile', group = packer_group, pattern = 'init.lua' })
-
 require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim' -- Package manager
 
@@ -63,6 +62,7 @@ require('packer').startup(function(use)
 			require('telescope').setup {
 				defaults = require('telescope.themes').get_ivy {
 					selection_caret = "->  ",
+					layout_config={height=0.45},
 				},
 			}
 		end
@@ -74,7 +74,9 @@ require('packer').startup(function(use)
 			require("telescope").setup {
 				extensions = {
 					file_browser = {
-						theme = "ivy",
+						-- Disabling theme uses default telescope theme
+						-- uncomment the below line for ivy to take max space as it can
+						-- theme = "ivy",
 						-- disables netrw and use telescope-file-browser in its place
 						hijack_netrw = true,
 					},
@@ -253,6 +255,7 @@ require('packer').startup(function(use)
 		after = "nvim-cmp",
 		config = function() require("nvim-autopairs").setup({}) end,
 	}
+
 	use {
 		"l3mon4d3/luasnip",
 		after = "nvim-cmp",

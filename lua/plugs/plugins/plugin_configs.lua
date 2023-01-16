@@ -161,41 +161,6 @@ cmp.setup {
 }
 
 
-
-
--- -- Lsp Installer
--- local lsp_installer = require("nvim-lsp-installer")
-
--- -- Register a handler that will be called for each installed server when it's ready (i.e. when installation is finished
--- -- or if the server is already installed).
--- lsp_installer.on_server_ready(function(server)
--- 	local opts = {}
--- 	server:setup(opts)
--- end)
-
-
--- Setup mason so it can manage external tooling
-require('mason').setup()
-
--- Enable the following language servers
--- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-local servers = { 'pyright', 'sumneko_lua', 'gopls' }
-
--- Ensure the servers above are installed
-require('mason-lspconfig').setup {
-  ensure_installed = servers,
-}
-
--- nvim-cmp supports additional completion capabilities
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
-for _, lsp in ipairs(servers) do
-  require('lspconfig')[lsp].setup {
-    capabilities = capabilities,
-  }
-end
-
 -- place this in one of your configuration file(s)
 local hop_ok, hop = pcall(require,"hop")
 if hop_ok then

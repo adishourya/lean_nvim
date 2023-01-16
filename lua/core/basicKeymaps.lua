@@ -38,10 +38,16 @@ map('n', '_', ':sp<CR>', { noremap = true })
 map('n', '|', ':vsp<CR>', { noremap = true })
 
 -- resize splits
-map('n', '<A-l>', ':vertical resize -10 <CR>', { noremap = true })
-map('n', '<A-h>', ':vertical resize +10 <CR>', { noremap = true })
-map('n', '<A-j>', ':resize +5 <CR>', { noremap = true })
-map('n', '<A-k>', ':resize -5 <CR>', { noremap = true })
+map('n', '<A-l>', ':vertical resize -20 <CR>', { noremap = true })
+map('n', '<A-h>', ':vertical resize +20 <CR>', { noremap = true })
+map('n', '<A-j>', ':resize +10 <CR>', { noremap = true })
+map('n', '<A-k>', ':resize -10 <CR>', { noremap = true })
+
+map('n', '<A-L>', ':vertical resize -200 <CR>', { noremap = true })
+map('n', '<A-H>', ':vertical resize +200 <CR>', { noremap = true })
+map('n', '<A-J>', ':resize +200 <CR>', { noremap = true })
+map('n', '<A-K>', ':resize -200 <CR>', { noremap = true })
+
 
 
 vim.cmd [[
@@ -52,4 +58,10 @@ imap <C-e> <ESC>A
 inoremap <M-f> <ESC><Space>Wi
 inoremap <M-b> <Esc>Bi
 inoremap <M-d> <ESC>cW
+]]
+
+-- scroll paragraph with ctrl-f and ctrl-b without polluting the jump list
+vim.cmd[[
+nnoremap <C-f> :<C-u>execute "keepjumps norm! " . v:count1 . "}"<CR>
+nnoremap <C-b> :<C-u>execute "keepjumps norm! " . v:count1 . "{"<CR>
 ]]

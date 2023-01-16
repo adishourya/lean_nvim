@@ -6,7 +6,7 @@ vim.g.maplocalleader = ' '
 map('n', '\\-', '<cmd>.!toilet -f term -F border <cr> <cmd>Commentary<cr> jVj:Commentary<cr>',{noremap=true})
 map('v', '\\-', '<cmd>.!toilet -f term -F border <cr> <cmd>Commentary<cr> jVj:Commentary<cr>',{noremap=true})
 
-map('n', '<leader>ff', ':Telescope find_files<CR>', { noremap = true })
+map('n', '<A-p>', ':Telescope find_files<CR>', { noremap = true })
 map('n', '<leader>rf', ':Telescope oldfiles<CR>', { noremap = true })
 map('n', '<leader>fw', ':Telescope live_grep<CR>', { noremap = true })
 map('n', '<leader>b', ':Telescope buffers<CR>', { noremap = true })
