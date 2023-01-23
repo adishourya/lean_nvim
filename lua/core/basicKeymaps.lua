@@ -49,7 +49,7 @@ map('n', '<A-J>', ':resize +200 <CR>', { noremap = true })
 map('n', '<A-K>', ':resize -200 <CR>', { noremap = true })
 
 
-
+-- Force of habbit mappings
 vim.cmd [[
 map <C-a> <ESC>^
 imap <C-a> <ESC>I

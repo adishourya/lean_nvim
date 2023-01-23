@@ -31,9 +31,11 @@ local opts = {
 	finder = finders.new_table(proj_dirs),
 	sorter = sorters.get_generic_fuzzy_sorter({}),
 	sorting_stratergy = "ascending",
+	prompt_title="Ctrl-P Projects",
 
 	attach_mappings = function(prompt_bufnr, map)
 		map("i", "<CR>", enter)
+		map("i", "<Esc>", actions.close)
 		return true
 	end
 }
@@ -43,4 +45,4 @@ local change_projects = function()
 	ctrlp:find()
 end
 vim.api.nvim_create_user_command("ChangeProject", change_projects, {})
-map('n',"<C-p>",":ChangeProject<cr>",{noremap=true})
+map('n',"<A-p>",":ChangeProject<cr>",{noremap=true})

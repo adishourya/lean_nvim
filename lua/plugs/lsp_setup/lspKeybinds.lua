@@ -30,10 +30,9 @@ local lspconfig_keybinds = {
 
 
 
-local ok_saga, saga = pcall(require, 'lspsaga')
+local ok_saga, _ = pcall(require, 'lspsaga')
 if ok_saga then
 	-- lspsaga
-	saga.init_lsp_saga()
 	map("n",lspconfig_keybinds.outline, "<cmd>LSoutlineToggle<CR>", {silent=true})
 	map("n", lspconfig_keybinds.finder, "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
 	map("n", lspconfig_keybinds.code_action, "<cmd>Lspsaga code_action<CR>", { silent = true })

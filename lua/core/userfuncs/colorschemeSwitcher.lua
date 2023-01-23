@@ -8,12 +8,19 @@ if not (ok_telescope) then
 end
 
 -- Making a new telescope colorscheme picker with live preview hopefully
-local current_scheme = vim.g.colors_name
 local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
 local sorters = require("telescope.sorters")
 local actions = require("telescope.actions")
 local actions_state = require("telescope.actions.state")
+
+local switcher_appearance = {
+	prompt_title = "Choose Colorscheme",
+}
+
+-- ┌────────────────────┐
+-- │Colorscheme Switcher│
+-- └────────────────────┘
 
 
 local installed_colourschemes = vim.fn.getcompletion('', "color")
@@ -39,7 +46,8 @@ end
 local downloaded = array_sub(preinstalled, installed_colourschemes)
 
 local escape = function(prompt_bufnr)
-	local cmd = "colorscheme " .. current_scheme
+	-- Reset it back to the colorscheme it was before
+	local cmd = "colorscheme " .. CURRENT_SCHEME
 	vim.cmd(cmd)
 	actions.close(prompt_bufnr)
 end
@@ -52,7 +60,7 @@ local enter = function(prompt_bufnr)
 	local csPath = vim.fn.expand("~/.config/nvim/lua/core/colorscheme_settings/set_scheme.lua")
 	local exec_run = string.format("echo 'vim.cmd[[colorscheme %s]]' > %s",selected[1],csPath)
 	vim.fn.jobstart(exec_run)
-	vim.notify("Colorscheme Change From "..current_scheme.." to "..selected[1])
+	vim.notify("Colorscheme Change From "..CURRENT_SCHEME.." to "..selected[1])
 end
 
 local preview_next = function(prompt_bufnr)
@@ -60,7 +68,6 @@ local preview_next = function(prompt_bufnr)
 	local selected = actions_state.get_selected_entry()
 	local cmd = "colorscheme " .. selected[1]
 	vim.cmd(cmd)
-
 end
 
 local preview_prev = function(prompt_bufnr)
@@ -70,7 +77,8 @@ local preview_prev = function(prompt_bufnr)
 	vim.cmd(cmd)
 end
 
-local opts = {
+
+local switcherOpts = {
 	finder = finders.new_table(downloaded),
 	sorter = sorters.get_generic_fuzzy_sorter({}),
 	sorting_stratergy = "ascending",
@@ -85,7 +93,8 @@ local opts = {
 }
 
 local change_scheme = function()
-	colors = pickers.new(opts)
+	CURRENT_SCHEME = vim.g.colors_name
+	colors = pickers.new(switcher_appearance,switcherOpts)
 	colors:find()
 end
 vim.api.nvim_create_user_command("Newcolorscheme", change_scheme, {})

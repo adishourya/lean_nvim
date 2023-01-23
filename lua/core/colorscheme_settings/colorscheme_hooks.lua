@@ -31,10 +31,10 @@ end
 local okSaga ,saga = pcall(require,"lspsaga")
 local fix_winbar = function ()
 	if okSaga then
-		saga.init_lsp_saga({
+		require('lspsaga').setup({
 			-- your configuration
 			symbol_in_winbar = {
-				in_custom = true
+				enable = true
 			},
 		})
 	end

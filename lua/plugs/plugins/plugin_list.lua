@@ -70,18 +70,7 @@ require('packer').startup(function(use)
 
 	use { "nvim-telescope/telescope-file-browser.nvim",
 		config = function()
-			-- settings
-			require("telescope").setup {
-				extensions = {
-					file_browser = {
-						-- Disabling theme uses default telescope theme
-						-- uncomment the below line for ivy to take max space as it can
-						-- theme = "ivy",
-						-- disables netrw and use telescope-file-browser in its place
-						hijack_netrw = true,
-					},
-				},
-			}
+			require("telescope").setup { extensions = { file_browser = { hijack_netrw = true, }, }, }
 			require("telescope").load_extension "file_browser"
 		end }
 
@@ -110,8 +99,8 @@ require('packer').startup(function(use)
 	-- Others
 	use({
 		"projekt0n/github-nvim-theme",
-		"shaunsingh/nord.nvim",
-		"neanias/everforest-nvim",
+		"bluz71/vim-nightfly-colors",
+		"JoosepAlviste/palenightfall.nvim",
 		"catppuccin/nvim",
 		"sainnhe/everforest",
 		"sainnhe/gruvbox-material",
@@ -119,6 +108,11 @@ require('packer').startup(function(use)
 		"sainnhe/sonokai",
 		"adishourya/monokaipro",
 	})
+
+	use {'AlexvZyl/nordic.nvim',config=function ()
+		-- available (flat/classic)
+		require 'nordic' .setup { telescope = { style = 'classic' } }
+	end}
 
 	-- Colors my hex and rgbs
 	use { 'norcalli/nvim-colorizer.lua',
@@ -197,13 +191,7 @@ require('packer').startup(function(use)
 		"glepnir/lspsaga.nvim",
 		branch = "main",
 		config = function()
-			local saga = require("lspsaga")
-			saga.init_lsp_saga({
-				-- your configuration
-				symbol_in_winbar = {
-					in_custom = true
-				},
-			})
+			require('lspsaga').setup()
 		end,
 	})
 

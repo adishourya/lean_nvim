@@ -25,6 +25,11 @@ vim.opt.clipboard = 'unnamedplus'
 vim.opt.laststatus = 3
 vim.opt.cmdheight = 0
 
+-- Statuscolumn
+vim.opt.numberwidth = 3
+vim.opt.statuscolumn = "%=%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum < 10 ? v:lnum . '  ' : v:lnum) : ''}%=%s"
+
+
 --Make line numbers default
 vim.wo.number = true
 
