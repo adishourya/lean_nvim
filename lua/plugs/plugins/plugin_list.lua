@@ -99,6 +99,7 @@ require('packer').startup(function(use)
 	-- Others
 	use({
 		"projekt0n/github-nvim-theme",
+		"adishourya/nordic.nvim",
 		"bluz71/vim-nightfly-colors",
 		"JoosepAlviste/palenightfall.nvim",
 		"catppuccin/nvim",
@@ -108,11 +109,6 @@ require('packer').startup(function(use)
 		"sainnhe/sonokai",
 		"adishourya/monokaipro",
 	})
-
-	use {'AlexvZyl/nordic.nvim',config=function ()
-		-- available (flat/classic)
-		require 'nordic' .setup { telescope = { style = 'classic' } }
-	end}
 
 	-- Colors my hex and rgbs
 	use { 'norcalli/nvim-colorizer.lua',

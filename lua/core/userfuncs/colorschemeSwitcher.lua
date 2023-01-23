@@ -13,6 +13,7 @@ local finders = require("telescope.finders")
 local sorters = require("telescope.sorters")
 local actions = require("telescope.actions")
 local actions_state = require("telescope.actions.state")
+local conf = require("telescope.config").values
 
 local switcher_appearance = {
 	prompt_title = "Choose Colorscheme",
@@ -63,6 +64,11 @@ local enter = function(prompt_bufnr)
 	vim.notify("Colorscheme Change From "..CURRENT_SCHEME.." to "..selected[1])
 end
 
+local preview_selection = function (selected)
+	local cmd = "colorscheme " .. selected
+	vim.cmd(cmd)
+end
+
 local preview_next = function(prompt_bufnr)
 	actions.move_selection_next(prompt_bufnr)
 	local selected = actions_state.get_selected_entry()
@@ -79,8 +85,9 @@ end
 
 
 local switcherOpts = {
-	finder = finders.new_table(downloaded),
-	sorter = sorters.get_generic_fuzzy_sorter({}),
+	finder = finders.new_table{results=downloaded},
+	-- sorter = sorters.get_generic_fuzzy_sorter({}),
+	sorter = conf.generic_sorter(),
 	sorting_stratergy = "ascending",
 
 	attach_mappings = function(prompt_bufnr, map)

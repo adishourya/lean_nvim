@@ -19,6 +19,7 @@ local finders = require("telescope.finders")
 local sorters = require("telescope.sorters")
 local actions = require("telescope.actions")
 local actions_state = require("telescope.actions.state")
+local conf = require("telescope.config").values
 
 local enter = function(prompt_bufnr)
 	local selected = actions_state.get_selected_entry()
@@ -29,7 +30,7 @@ end
 
 local opts = {
 	finder = finders.new_table(proj_dirs),
-	sorter = sorters.get_generic_fuzzy_sorter({}),
+	sorter = conf.generic_sorter(),
 	sorting_stratergy = "ascending",
 	prompt_title="Ctrl-P Projects",
 
