@@ -46,6 +46,35 @@ local array_sub = function(t1, t2)
 end
 local downloaded = array_sub(preinstalled, installed_colourschemes)
 
+-- Exports and reloads
+function ExportColorsKitty()
+	local fn = vim.fn
+	local filename = os.getenv("HOME") .. "/.config/kitty/nvim_export.conf"
+	local file = io.open(filename, "w")
+	io.output(file)
+	io.write("# vim:ft=kitty" .. "\n\n")
+	io.write("# exported from " .. vim.g.colors_name .. "\n\n")
+	local fg = fn.synIDattr(fn.hlID("Normal"), "fg")
+	local bg = fn.synIDattr(fn.hlID("Normal"), "bg")
+	io.write("foreground " .. fg .. "\n")
+	io.write("background " .. bg .. "\n")
+	io.write("selection_foreground " .. bg .. "\n")
+	io.write("selection_background " .. fg .. "\n")
+	for i = 0,15 do
+		local var = "g:terminal_color_" .. tostring(i)
+		if fn.exists(var) == 1 then
+			local tc = fn.eval(var)
+			io.write("color" .. tostring(i) .. " " .. tc .. "\n")
+			if i == 2 then
+				io.write("cursor " .. tc .. "\n")
+			end
+		end
+	end
+	io.close(file)
+	local exec_run = string.format("kitty @ set-colors --all --configured ~/.config/kitty/nvim_export.conf")
+	vim.fn.jobstart(exec_run)
+end
+
 local escape = function(prompt_bufnr)
 	-- Reset it back to the colorscheme it was before
 	local cmd = "colorscheme " .. CURRENT_SCHEME
@@ -62,6 +91,7 @@ local enter = function(prompt_bufnr)
 	local exec_run = string.format("echo 'vim.cmd[[colorscheme %s]]' > %s",selected[1],csPath)
 	vim.fn.jobstart(exec_run)
 	vim.notify("Colorscheme Change From "..CURRENT_SCHEME.." to "..selected[1])
+	ExportColorsKitty()
 end
 
 local preview_selection = function (selected)
@@ -91,6 +121,12 @@ local switcherOpts = {
 	sorting_stratergy = "ascending",
 
 	attach_mappings = function(prompt_bufnr, map)
+		actions.select_default:replace(function()
+			local current_picker = actions_state.get_current_picker(prompt_bufnr)
+			local selection_index = current_picker:get_index(current_picker:get_selection_row())
+			vim.cmd('colorscheme '..selection_index[1])
+			actions.close(prompt_bufnr)
+		end)
 		map("i", "<CR>", enter)
 		map("i", "<ESC>", escape)
 		map("i", "<C-n>", preview_next)

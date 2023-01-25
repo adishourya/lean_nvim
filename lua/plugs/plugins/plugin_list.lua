@@ -209,6 +209,12 @@ require('packer').startup(function(use)
 		})
 		vim.keymap.set("n", "<A-d>", "<cmd>ToggleTerm<CR>", { silent = true })
 		vim.keymap.set("t", "<A-d>", [[<C-\><C-n><cmd>ToggleTerm<CR>]], { silent = true })
+		local Terminal  = require('toggleterm.terminal').Terminal
+		local lazygit = Terminal:new({ cmd = "lazygit",direction="tab", hidden = true })
+		function _lazygit_toggle()
+			lazygit:toggle()
+		end
+		vim.api.nvim_set_keymap("n", "<A-g>", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
 	end}
 
 	-- Completion stuff
