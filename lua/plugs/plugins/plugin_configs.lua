@@ -1,6 +1,3 @@
--- Enable telescope fzf native
-require('telescope').load_extension 'fzf'
-
 -- Treesitter configuration
 -- Parsers must be installed manually via :TSInstall
 require('nvim-treesitter.configs').setup {
@@ -57,6 +54,7 @@ require('nvim-treesitter.configs').setup {
 
 -- luasnip setup
 local luasnip = require 'luasnip'
+local ts_utils = require("nvim-treesitter.ts_utils")
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
@@ -72,41 +70,21 @@ cmp.setup {
 		['<C-Space>'] = cmp.mapping.complete(),
 		['<C-e>'] = cmp.mapping.abort(),
 	}),
-
-  -- mapping = cmp.mapping.preset.insert({
-  --   ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-  --   ['<C-f>'] = cmp.mapping.scroll_docs(4),
-  --   ['<C-Space>'] = cmp.mapping.complete(),
-  --   ['<CR>'] = cmp.mapping.confirm {
-  --     behavior = cmp.ConfirmBehavior.Replace,
-  --     select = true,
-  --   },
-  --   ['<Tab>'] = cmp.mapping(function(fallback)
-  --     if cmp.visible() then
-  --       cmp.select_next_item()
-  --     elseif luasnip.expand_or_jumpable() then
-  --       luasnip.expand_or_jump()
-  --     else
-  --       fallback()
-  --     end
-  --   end, { 'i', 's' }),
-  --   ['<S-Tab>'] = cmp.mapping(function(fallback)
-  --     if cmp.visible() then
-  --       cmp.select_prev_item()
-  --     elseif luasnip.jumpable(-1) then
-  --       luasnip.jump(-1)
-  --     else
-  --       fallback()
-  --     end
-  --   end, { 'i', 's' }),
-  -- }),
-  --
-
 	-- In the order of the priority
   sources = {
+    { name = "nvim_lsp",entry_filter = function(entry,context) 
+			local kind = entry:get_kind()
+			local node = ts_utils.get_node_at_cursor():type()
+			if node == "arguments" then
+				if kind == 6 then --6:correspond to variable
+					return true
+				else
+					return false
+				end
+			end
+		end},
     { name = "gh_issues" },
     { name = "nvim_lua" },
-    { name = "nvim_lsp" },
     { name = "path" },
     { name = "luasnip" },
 		{ name= "friendly-snippets" },

@@ -151,6 +151,14 @@ require('packer').startup(function(use)
 		requires = { 'nvim-lua/plenary.nvim' },
 		config = function()
 			require('gitsigns').setup({
+				signs = {
+					add = { hl = "GitSignsAdd", text = "│" },
+					change = { hl = "GitSignsChange", text = "│" },
+					delete = { hl = "GitSignsDelete", text = "-" },
+					topdelete = { hl = "GitSignsDelete", text = "-" },
+					changedelete = { hl = "GitSignsChangeDelete", text = "│" },
+					untracked = { hl = "GitSignsUntracked", text = "│" },
+				},
 				signcolumn = true,
 				numhl = false,
 				linehl = false
@@ -258,15 +266,7 @@ require('packer').startup(function(use)
 	use {
 		"danymat/neogen",
 		module = "neogen",
-		ft = {
-			"sh",
-			"c",
-			"cpp",
-			"go",
-			"lua",
-			"python",
-			"rust",
-		},
+		ft = { "sh", "c", "cpp", "go", "lua", "python", "rust", },
 		config = function() require("neogen").setup({}) end,
 	}
 
