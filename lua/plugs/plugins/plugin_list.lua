@@ -195,7 +195,15 @@ require('packer').startup(function(use)
 		"glepnir/lspsaga.nvim",
 		branch = "main",
 		config = function()
-			require('lspsaga').setup()
+			require('lspsaga').setup({
+					lightbulb = {
+					enable = false,
+					enable_in_insert = false,
+					sign = false,
+					sign_priority = 40,
+					virtual_text = true,
+					},
+			})
 		end,
 	})
 
@@ -211,6 +219,7 @@ require('packer').startup(function(use)
 		vim.keymap.set("t", "<A-d>", [[<C-\><C-n><cmd>ToggleTerm<CR>]], { silent = true })
 		local Terminal  = require('toggleterm.terminal').Terminal
 		local lazygit = Terminal:new({ cmd = "lazygit",direction="tab", hidden = true })
+		---@diagnostic disable-next-line: lowercase-global
 		function _lazygit_toggle()
 			lazygit:toggle()
 		end
