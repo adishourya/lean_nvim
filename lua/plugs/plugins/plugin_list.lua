@@ -98,7 +98,6 @@ require('packer').startup(function(use)
 	use({ "adishourya/catppuccin_chocolatey", as = "chocolatey" })
 	-- Others
 	use({
-		"projekt0n/github-nvim-theme",
 		"adishourya/nordic.nvim",
 		"bluz71/vim-nightfly-colors",
 		"JoosepAlviste/palenightfall.nvim",
@@ -109,7 +108,6 @@ require('packer').startup(function(use)
 		"sainnhe/sonokai",
 		"adishourya/monokaipro",
 	})
-
 	-- Colors my hex and rgbs
 	use { 'norcalli/nvim-colorizer.lua',
 		config = function()
