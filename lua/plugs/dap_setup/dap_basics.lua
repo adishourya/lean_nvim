@@ -1,6 +1,6 @@
 -- Dappers
 require("mason-nvim-dap").setup({
-	ensure_installed = { "delve", "codelldb" }
+	ensure_installed = {}
 })
 
 

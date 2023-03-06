@@ -28,23 +28,23 @@ local fix_animation = function ()
 end
 
 
-local okSaga ,saga = pcall(require,"lspsaga")
-local fix_winbar = function ()
-	if okSaga then
-		require('lspsaga').setup({
-			-- your configuration
-			symbol_in_winbar = {
-				enable = true
-			},
-		})
-	end
-end
+-- local okSaga ,saga = pcall(require,"lspsaga")
+-- local fix_winbar = function ()
+-- 	if okSaga then
+-- 		require('lspsaga').setup({
+-- 			-- your configuration
+-- 			symbol_in_winbar = {
+-- 				enable = true
+-- 			},
+-- 		})
+-- 	end
+-- end
 
 autocmd("ColorScheme",{
 	callback = function ()
 		fix_borders()
 		fix_animation()
-		fix_winbar()
+		-- fix_winbar()
 	end,
 	group="user",
 })
