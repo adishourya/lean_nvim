@@ -75,6 +75,23 @@ function ExportColorsKitty()
 	vim.fn.jobstart(exec_run)
 end
 
+function ExportStatulineColor()
+	local fn = vim.fn
+	local filename = os.getenv("HOME") .. "/.tmux_statuline_colors.conf"
+	local file = io.open(filename, "w")
+	local statusline_fg = vim.fn.synIDattr(vim.fn.hlID('StatusLine'), 'fg')
+	local statusline_bg = vim.fn.synIDattr(vim.fn.hlID('StatusLine'), 'bg')
+	io.output(file)
+	io.write("# Tmux colors exported from neovim" .. "\n\n")
+	io.write("# exported from " .. vim.g.colors_name .. "\n\n")
+	local color_string = string.format("set-option -g status-style bg=%s,fg=%s",statusline_bg,statusline_fg)
+	io.write(color_string)
+	io.close(file)
+
+	local exec_run = string.format("tmux source-file ~/.tmux.conf")
+	vim.fn.jobstart(exec_run)
+end
+
 local escape = function(prompt_bufnr)
 	-- Reset it back to the colorscheme it was before
 	local cmd = "colorscheme " .. CURRENT_SCHEME
@@ -92,6 +109,7 @@ local enter = function(prompt_bufnr)
 	vim.fn.jobstart(exec_run)
 	vim.notify("Colorscheme Change From "..CURRENT_SCHEME.." to "..selected[1])
 	ExportColorsKitty()
+	ExportStatulineColor()
 end
 
 local preview_selection = function (selected)

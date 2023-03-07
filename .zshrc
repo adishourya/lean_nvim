@@ -140,15 +140,29 @@ unset __conda_setup
 export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
 # personal fzf cmd , just searches documents and downloads
-sayHi(){
-	echo "hi";
+
+my-fzf-cd-widget() {
+  local cmd="${FZF_ALT_C_COMMAND:-"command find -L ~/Documents ~/Downloads ~/.config -mindepth 1 -type d -print 2> /dev/null"}"
+  setopt localoptions pipefail no_aliases 2> /dev/null
+  local dir="$(eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse --bind=ctrl-z:ignore ${FZF_DEFAULT_OPTS-} ${FZF_ALT_C_OPTS-}" $(__fzfcmd) +m)"
+  if [[ -z "$dir" ]]; then
+    zle redisplay
+    return 0
+  fi
+  zle push-line # Clear buffer. Auto-restored on next prompt.
+  BUFFER="builtin cd -- ${(q)dir}"
+  zle accept-line
+  local ret=$?
+  unset dir # ensure this doesn't end up appearing in prompt expansion
+  zle reset-prompt
+  return $ret
+  return $ret
 }
 
-zle     -N             sayHi
-bindkey -M emacs '\ep' sayHi
-bindkey -M vicmd '\ep' sayHi
-bindkey -M viins '\ep' sayHi
-
+zle     -N             my-fzf-cd-widget
+bindkey -M emacs '^p' my-fzf-cd-widget
+bindkey -M vicmd '^p' my-fzf-cd-widget
+bindkey -M viins '^p' my-fzf-cd-widget
 
 
 # For compilers to find mysql-client you may need to set:
@@ -165,3 +179,5 @@ export PKG_CONFIG_PATH="/opt/homebrew/opt/mysql-client/lib/pkgconfig"
 # if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
 # exec tmux new-session -A -s "Scooby Doo"
 # fi
+#
+# tmux list-sessions | awk '{print $1}' | fzf | xargs tmux attach-session -t
